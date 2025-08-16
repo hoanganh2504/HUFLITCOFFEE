@@ -1,0 +1,444 @@
+@model List<HUFLITCOFFEE.Models.Main.Product>;
+@{
+    string curPage = ViewBag.CurPage;
+}
+<link rel="stylesheet" href="~/css/admin.css">
+<div class="Admin_vertical_all">
+    <div class="Admin_toolbar">
+        <h1 style="text-align: center;">Coffee</h1>
+        <ul class="Admin_list_toolbar" style="display: flex; flex-direction: column; gap:40px">
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/2550/2550264.png" loading="lazy" alt="Home "
+                        title="Home " width="20" height="20"> <span id="Admin_overview"><a href="/admin">Tổng
+                            quan</a></span> </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"> <img
+                        src="https://cdn-icons-png.flaticon.com/128/888/888034.png" loading="lazy" alt="Document "
+                        title="Document " width="20" height="20">
+                    <Span id="Admin_order"><a href="/admin/adminorder">Đơn
+                            hàng</a></Span> <img src="https://cdn-icons-png.flaticon.com/128/271/271228.png"
+                        loading="lazy" alt="Right arrow " title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"> <img
+                        src="https://cdn-icons-png.flaticon.com/128/3128/3128841.png" loading="lazy" alt="Motorbike "
+                        title="Motorbike " width="20" height="20">
+                    <span id="Admin_transport"><a href="/admin/admindelivery">Giao
+                            hàng</a></span> <img src="https://cdn-icons-png.flaticon.com/128/271/271228.png"
+                        loading="lazy" alt="Right arrow " title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/679/679720.png" loading="lazy" alt="Box "
+                        title="Box " width="20" height="20">
+                    <span id="Admin_product"><a href="/admin/adminproduct">Sản
+                            phẩm</a></span> <img src="https://cdn-icons-png.flaticon.com/128/271/271228.png"
+                        loading="lazy" alt="Right arrow " title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png" loading="lazy" alt="User "
+                        title="User " width="20" height="20">
+                    <span id="Admin_customer"><a href="/admin/admincustomer">Khách hàng</a></span> <img
+                        src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+                        title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/2329/2329087.png" loading="lazy" alt="Dashboard "
+                        title="Dashboard " width="20" height="20">
+                    <a href="/admin/thongkebaocao">Báo cáo</a> <img
+                        src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+                        title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            @* <li class="Admin_list_toolbar_item"><img src="https://cdn-icons-png.flaticon.com/128/702/702455.png"
+            loading="lazy" alt="Warehouse " title="Warehouse " width="20" height="20">Kho <img
+            src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+            title="Right arrow " width="10" height="10"></li>
+            <li class="Admin_list_toolbar_item"><img src="https://cdn-icons-png.flaticon.com/128/5402/5402931.png"
+            loading="lazy" alt="Recipe book " title="Recipe book " width="20" height="20">Công thức <img
+            src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+            title="Right arrow " width="10" height="10"></li> *@
+        </ul>
+    </div>
+    @* Sản Phẩm *@
+    <div Class="Admin_product" style="padding: 30px;">
+
+        @* Bảng Nhập Sản Phẩm *@
+        <form id="addProductForm" method="post" enctype="multipart/form-data" action="/admin/addproduct">
+            <div class="Admin_product_add_hidden" style="margin: auto;">
+                <input type="file" id="uploadImageInput" name="product_image" style="display: none;">
+                <div class="Admin_product_add_hidden_Row1">
+                    <div>Thêm ảnh sản phẩm</div>
+                    <div id="Add_product_close">
+                        <img src="https://cdn-icons-png.flaticon.com/128/1828/1828778.png" loading="lazy" alt="Close"
+                            title="Close" width="20" height="20">
+                    </div>
+                </div>
+                <div class="Admin_product_add_hidden_Row2">
+                    <div class="Admin_product_add_hidden_add_image">
+                        <img src="https://cdn-icons-png.flaticon.com/128/992/992651.png" loading="lazy" alt="Add"
+                            title="Add" width="30" height="30" id="addImageIcon">
+                    </div>
+                    <div class="Admin_add_detail_product">
+                        <div class="Admin_product_add_hidden_detail">
+                            <div>ID danh mục sản phẩm
+                            </div>
+                            <div><input type="text" name="IdCagory" placeholder="Nhập id danh mục sản phẩm"></div>
+                            <div>Giá sản phẩm</div>
+                            <div><input type="text" name="product_price" placeholder="Nhập giá sản phẩm"></div>
+                        </div>
+                        <div class="Admin_product_add_hidden_detail">
+                            <div>Tên sản phẩm</div>
+                            <div><input type="text" name="product_name" placeholder="Nhập tên sản phẩm"></div>
+                            <div>Size</div>
+                            <div><input type="text" name="product_size" placeholder="Nhập size sản phẩm"></div>
+                        </div>
+                        <div class="Admin_product_add_hidden_detail">
+                            <div>Tên danh mục sản phẩm</div>
+                            <div style="width:40%"><input type="text" name="product_category"
+                                    placeholder="Nhập tên danh mục sản phẩm" style="width:100%"></div>
+                        </div>
+                        <div class="Admin_product_add_hidden_detail">
+                            <div>Mô tả sản phẩm</div>
+                            <div style="width:100%"><textarea name="product_description"
+                                    placeholder="Nhập mô tả sản phẩm" style="width:100%;height: 50px;"></textarea></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Admin_product_add_hidden_Row3">
+                    <div><button type="submit" id="Admin_save">Lưu</button></div>
+                </div>
+            </div>
+        </form>
+        @* Bảng eidt sản phẩm *@
+        <form id="editProductForm" method="post" enctype="multipart/form-data" action="/admin/editproduct">
+            <input type="hidden" name="edit_product_image_url" value="">
+            <div class="Admin_product_add_hidden">
+                <input type="file" id="uploadImageInputEdit" name="edit_product_image" style="display: none;">
+                <div class="Admin_product_add_hidden_Row1">
+                    <div>Sửa ảnh sản phẩm</div>
+                    <div id="Edit_product_close">
+                        <img src="https://cdn-icons-png.flaticon.com/128/1828/1828778.png" loading="lazy" alt="Close"
+                            title="Close" width="20" height="20">
+                    </div>
+                </div>
+                <div class="Admin_product_add_hidden_Row2">
+                    <div class="Admin_product_add_hidden_add_image">
+                        <img src="https://cdn-icons-png.flaticon.com/128/992/992651.png" loading="lazy" alt="Add"
+                            title="Add" width="30" height="30" id="addImageIconEdit">
+                    </div>
+                    <div class="Admin_add_detail_product">
+                        <div class="Admin_product_add_hidden_detail">
+                            <div>Mã sản phẩm</div>
+                            <div><input type="text" name="edit_product_id" placeholder="Nhập mã sản phẩm"></div>
+                            <div>Tên sản phẩm</div>
+                            <div><input type="text" name="edit_product_name" placeholder="Nhập tên sản phẩm"></div>
+                            <div>Giá sản phẩm</div>
+                            <div><input type="text" name="edit_product_price" placeholder="Nhập giá sản phẩm"></div>
+                        </div>
+                        <div class="Admin_product_add_hidden_detail">
+                            <div>Tên danh mục sản phẩm</div>
+                            <div style="width:40%"><input type="text" name="edit_product_category"
+                                    placeholder="Nhập tên danh mục sản phẩm" style="width:100%"></div>
+                            <div>Size</div>
+                            <div><input type="text" name="edit_product_size" placeholder="Nhập size sản phẩm"></div>
+                        </div>
+                        <div class="Admin_product_add_hidden_detail">
+                            <div>Mô tả sản phẩm</div>
+                            <div style="width:100%"><textarea name="edit_product_description"
+                                    placeholder="Nhập mô tả sản phẩm" style="width:100%;height: 50px;"></textarea></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Admin_product_add_hidden_Row3">
+                    <div><button type="submit" id="Admin_update">Cập nhật</button></div>
+                </div>
+            </div>
+        </form>
+        @* Bảng delete sản phẩm *@
+        <form id="deleteProductForm" method="post" enctype="multipart/form-data" action="/admin/deleteproduct">
+            <div>Mã sản phẩm</div>
+            <div><input type="text" name="delete_product_id"></div>
+        </form>
+
+
+
+        <div style="border: 1px solid black; border-radius: 5px;">
+            <div style="display: flex; justify-content: space-between; padding:10px">
+                <div Class="Admin_product_title"> Danh Sách Sản Phẩm</div>
+                <div id="Add_product_icon"><img src="https://cdn-icons-png.flaticon.com/128/9641/9641897.png"
+                        data-src="https://cdn-icons-png.flaticon.com/128/9641/9641897.png" alt="Plus" title="Plus"
+                        width="50" height="50" class="lzy lazyload--done"
+                        srcset="https://cdn-icons-png.flaticon.com/128/9641/9641897.png 4x"></div>
+            </div>
+            <table Class="Admin_content_result_order">
+                <thead style="background-color: #ccc;">
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh sản phẩm</th>
+                        <th>Giá sản phẩm</th>
+                        <th>Mô tả sản phẩm</th>
+                        <th>Size</th>
+                        <th>Tên Danh mục sản phẩm</th>
+                        <th>Processing section</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ProductId</td>
+                                <td>@item.NameProduct</td>
+                                <td><img class=" lazyloaded" src="@item.ImgProduct" width="100px" style="border-radius: 10px">
+                                </td>
+                                <td>@item.PriceProduct đ</td>
+                                <td>@item.DescriptionProduct</td>
+                                <td>@item.Dvt</td>
+                                <td>@item.NameCategory</td>
+                                <td>
+                                    <div class="Admin_Processing_section"> <button class="Admin_delete"
+                                            data-product-id="@item.ProductId">Delete</button>
+                                        <button class="Admin_edit">Edit</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('Add_product_icon').addEventListener('click', function () {
+        var hiddenForm = document.getElementById('addProductForm');
+        hiddenForm.style.display = 'block';
+    });
+    document.querySelectorAll('.Admin_edit').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var hiddenForm = document.getElementById('editProductForm');
+            hiddenForm.style.display = 'block';
+        });
+    });
+
+
+
+    document.getElementById('Add_product_close').addEventListener('click', function () {
+        var addProductForm = document.getElementById('addProductForm');
+        addProductForm.style.display = 'none';
+    });
+    document.getElementById('Edit_product_close').addEventListener('click', function () {
+        var editProductForm = document.getElementById('editProductForm');
+        editProductForm.style.display = 'none';
+    });
+
+
+    document.getElementById('addImageIcon').addEventListener('click', function () {
+        document.getElementById('uploadImageInput').click();
+    });
+
+    // Xử lý sự kiện khi người dùng chọn hình ảnh từ máy tính
+    document.getElementById('uploadImageInput').addEventListener('change', function (event) {
+        var file = event.target.files[0]; // Lấy file hình ảnh từ sự kiện
+
+        if (file) {
+            var reader = new FileReader(); // Tạo đối tượng FileReader để đọc file
+
+            reader.onload = function (e) {
+                // Khi file đã được đọc thành công
+                var imageSrc = e.target.result; // Lấy đường dẫn base64 của hình ảnh
+
+                // Hiển thị hình ảnh đã chọn lên biểu tượng "Add image"
+                var addImageIcon = document.getElementById('addImageIcon');
+                addImageIcon.src = imageSrc; // Thay đổi thuộc tính src của thẻ img để hiển thị hình ảnh mới
+                addImageIcon.width = 100; // Thay đổi chiều rộng của ảnh
+                addImageIcon.height = 100; // Thay đổi chiều cao của ảnh
+            };
+
+            reader.readAsDataURL(file); // Đọc file dưới dạng data URL (base64)
+        }
+    });
+    //Xử lý nút thêm sản phẩm
+    document.getElementById('addProductForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var formData = new FormData();
+        formData.append('IdCagory', document.querySelector('input[name="IdCagory"]').value);
+        formData.append('product_name', document.querySelector('input[name="product_name"]').value);
+        formData.append('product_price', document.querySelector('input[name="product_price"]').value);
+        formData.append('product_size', document.querySelector('input[name="product_size"]').value);
+        formData.append('product_category', document.querySelector('input[name="product_category"]').value);
+        formData.append('product_description', document.querySelector('textarea[name="product_description"]').value);
+        formData.append('product_image', document.getElementById('uploadImageInput').files[0]);
+
+
+        fetch('/admin/addproduct', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi gửi yêu cầu:', error);
+                alert('Lỗi khi gửi yêu cầu.');
+            });
+    });
+    // Xử lý sự kiện khi click nút "Edit"
+    document.querySelectorAll('.Admin_edit').forEach(function (editBtn) {
+        editBtn.addEventListener('click', function () {
+            var row = editBtn.closest('tr');
+
+            var productId = row.querySelector('td:nth-child(1)').innerText.trim();
+            var productName = row.querySelector('td:nth-child(2)').innerText.trim();
+            var productImage = row.querySelector('img').getAttribute('src');
+            var productPriceText = row.querySelector('td:nth-child(4)').innerText.trim();
+            var productPrice = productPriceText.replace(/[^\d]/g, '');
+            var productDescription = row.querySelector('td:nth-child(5)').innerText.trim();
+            var productSize = row.querySelector('td:nth-child(6)').innerText.trim();
+            var productCategory = row.querySelector('td:nth-child(7)').innerText.trim();
+            var editProductForm = document.getElementById('editProductForm');
+            // Thêm 3 số 0 vào giá sản phẩm
+            productPrice = parseInt(productPrice) / 1000;
+            editProductForm.querySelector('input[name="edit_product_id"]').value = productId;
+            editProductForm.querySelector('input[name="edit_product_name"]').value = productName;
+            editProductForm.querySelector('input[name="edit_product_price"]').value = productPrice;
+            editProductForm.querySelector('input[name="edit_product_size"]').value = productSize;
+            editProductForm.querySelector('input[name="edit_product_category"]').value = productCategory;
+            editProductForm.querySelector('textarea[name="edit_product_description"]').value = productDescription;
+
+            // Gán URL ảnh hiện tại vào input ẩn
+            editProductForm.querySelector('input[name="edit_product_image_url"]').value = productImage;
+
+            var addImageIcon = editProductForm.querySelector('#addImageIconEdit');
+            addImageIcon.src = productImage;
+            addImageIcon.width = 100;
+            addImageIcon.height = 100;
+
+            addImageIcon.addEventListener('click', function () {
+                document.getElementById('uploadImageInputEdit').click();
+            });
+
+            document.getElementById('uploadImageInputEdit').addEventListener('change', function (event) {
+                var file = event.target.files[0];
+
+                if (file) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var imageSrc = e.target.result;
+                        addImageIcon.src = imageSrc;
+                        addImageIcon.width = 100;
+                        addImageIcon.height = 100;
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            editProductForm.style.display = 'block';
+        });
+    });
+
+    document.getElementById('editProductForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var formData = new FormData();
+        formData.append('product_id', document.querySelector('input[name="edit_product_id"]').value);
+        formData.append('product_name', document.querySelector('input[name="edit_product_name"]').value);
+        formData.append('product_price', document.querySelector('input[name="edit_product_price"]').value);
+        formData.append('product_size', document.querySelector('input[name="edit_product_size"]').value);
+        formData.append('product_category', document.querySelector('input[name="edit_product_category"]').value);
+        formData.append('product_description', document.querySelector('textarea[name="edit_product_description"]').value);
+
+        // Lấy URL ảnh hiện tại từ thẻ img
+        var currentImageUrl = document.getElementById('addImageIconEdit').getAttribute('src');
+        formData.append('product_image_url', currentImageUrl);
+
+        // Lấy file ảnh từ input nếu có
+        var fileInput = document.getElementById('uploadImageInputEdit');
+        if (fileInput.files.length > 0) {
+            formData.append('product_image', fileInput.files[0]);
+        } else {
+            // Thêm giá trị rỗng để tránh lỗi yêu cầu trường
+            formData.append('product_image', new Blob());
+        }
+
+        fetch('/admin/editproduct', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    console.error('Lỗi dữ liệu:', data.errors);
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi gửi yêu cầu:', error);
+                alert('Lỗi khi gửi yêu cầu.');
+            });
+    });
+
+    // Xử lý nút delete
+    document.querySelectorAll('.Admin_delete').forEach(function (deleteBtn) {
+        deleteBtn.addEventListener('click', function () {
+            var productId = deleteBtn.getAttribute('data-product-id');
+
+            // Hiển thị hộp thoại xác nhận
+            if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+                // Đặt giá trị productId vào input ẩn
+                document.querySelector('input[name="delete_product_id"]').value = productId;
+
+                // Tạo đối tượng FormData từ form
+                var formData = new FormData(document.getElementById('deleteProductForm'));
+
+                // Gửi yêu cầu xóa sản phẩm
+                fetch('/admin/deleteproduct', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            console.error('Lỗi dữ liệu:', data.errors);
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi gửi yêu cầu:', error);
+                        alert('Lỗi khi gửi yêu cầu.');
+                    });
+            } else {
+                // Nếu người dùng không chắc chắn, không làm gì cả
+                return false;
+            }
+        });
+    });
+
+
+</script>

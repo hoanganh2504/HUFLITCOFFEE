@@ -1,0 +1,288 @@
+@model List<HUFLITCOFFEE.Models.Main.OrderDetailViewModel>;
+<link rel="stylesheet" href="~/css/admin.css">
+<style>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 50%;
+        margin: auto;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        using HUFLITCOFFEE.Models.Main;
+        #line default min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content div {
+        color: black;
+        background-color: #fff;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        cursor: pointer;
+    }
+
+    .dropdown-content div:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown div.main {
+        background-color: #8b8484;
+        border-radius: 5px;
+        color: rgb(114, 215, 114);
+        padding: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+</style>
+<div class="Admin_vertical_all">
+    <div class="Admin_toolbar">
+        <h1 style="text-align: center;">Coffee</h1>
+        <ul class="Admin_list_toolbar" style="display: flex; flex-direction: column; gap:40px">
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/2550/2550264.png" loading="lazy" alt="Home "
+                        title="Home " width="20" height="20"> <span id="Admin_overview"><a href="/admin">Tổng
+                            quan</a></span> </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"> <img
+                        src="https://cdn-icons-png.flaticon.com/128/888/888034.png" loading="lazy" alt="Document "
+                        title="Document " width="20" height="20">
+                    <Span id="Admin_order"><a href="/admin/adminorder">Đơn
+                            hàng</a></Span> <img src="https://cdn-icons-png.flaticon.com/128/271/271228.png"
+                        loading="lazy" alt="Right arrow " title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"> <img
+                        src="https://cdn-icons-png.flaticon.com/128/3128/3128841.png" loading="lazy" alt="Motorbike "
+                        title="Motorbike " width="20" height="20">
+                    <span id="Admin_transport"><a href="/admin/admindelivery">Giao
+                            hàng</a></span> <img src="https://cdn-icons-png.flaticon.com/128/271/271228.png"
+                        loading="lazy" alt="Right arrow " title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/679/679720.png" loading="lazy" alt="Box "
+                        title="Box " width="20" height="20">
+                    <span id="Admin_product"><a href="/admin/adminproduct">Sản
+                            phẩm</a></span> <img src="https://cdn-icons-png.flaticon.com/128/271/271228.png"
+                        loading="lazy" alt="Right arrow " title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png" loading="lazy" alt="User "
+                        title="User " width="20" height="20">
+                    <span id="Admin_customer"><a href="/admin/admincustomer">Khách hàng</a></span> <img
+                        src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+                        title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            <li class="Admin_list_toolbar_item">
+                <div style="display: flex; align-items: center; gap:2px"><img
+                        src="https://cdn-icons-png.flaticon.com/128/2329/2329087.png" loading="lazy" alt="Dashboard "
+                        title="Dashboard " width="20" height="20">
+                    <a href="/admin/thongkebaocao">Báo cáo</a> <img
+                        src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+                        title="Right arrow " width="10" height="2">
+                </div>
+            </li>
+            @* <li class="Admin_list_toolbar_item"><img src="https://cdn-icons-png.flaticon.com/128/702/702455.png"
+            loading="lazy" alt="Warehouse " title="Warehouse " width="20" height="20">Kho <img
+            src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+            title="Right arrow " width="10" height="10"></li>
+            <li class="Admin_list_toolbar_item"><img src="https://cdn-icons-png.flaticon.com/128/5402/5402931.png"
+            loading="lazy" alt="Recipe book " title="Recipe book " width="20" height="20">Công thức <img
+            src="https://cdn-icons-png.flaticon.com/128/271/271228.png" loading="lazy" alt="Right arrow "
+            title="Right arrow " width="10" height="10"></li> *@
+        </ul>
+    </div>
+    @* đơn hàng *@
+    <div class="Admin_view_screen_order">
+        <div class="Admin_view_tilter">
+            <div>Đơn hàng</div>
+            <div class="Admin_name_user">
+                <Span style="text-decoration: underline;">Tên tài khoản
+                </Span>
+                <a style="color: red;">(Đăng xuất)</a>
+            </div>
+        </div>
+
+        <div Class="Admin_status_order">
+            <div Class="Admin_status_title"> Đơn hàng chờ xử lý</div>
+            <div Class="Admin_content_status" style="border-bottom:1px solid #ccc;">
+                <div Class="Admin_content_status_tem">
+                    <img src="https://cdn-icons-png.flaticon.com/128/833/833602.png" loading="lazy" alt="Wall clock "
+                        title="Wall clock " width="30" height="30"> Chờ duyệt
+                </div>
+                <span style="border-right:1px solid #ccc;"></span>
+                <div Class="Admin_content_status_tem">
+                    <img src="https://cdn-icons-png.flaticon.com/128/411/411760.png" loading="lazy" alt="Delivery "
+                        title="Delivery " width="30" height="30"> Đang giao hàng
+                </div>
+            </div>
+            <div Class="Admin_content_status">
+                <div Class="Admin_content_status_tem">
+                    <img src="https://cdn-icons-png.flaticon.com/128/4213/4213181.png" loading="lazy"
+                        alt="Pay per click " title="Pay per click " width="30" height="30"> Chờ thanh toán
+                </div>
+                <span style="border-right:1px solid #ccc;"></span>
+                <div Class="Admin_content_status_tem">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3503/3503607.png" loading="lazy" alt="Calendar "
+                        title="Calendar " width="30" height="30"> Đơn giờ hẹn
+                </div>
+            </div>
+        </div>
+        <div class="Admin_result">
+            <div class="Admin_result_title">Danh sách đơn hàng</div>
+            <div>
+                <table Class="Admin_content_result_order">
+                    <thead style="background-color: #ccc;">
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Mã khách hàng</th>
+                            <th>Ngày tạo đơn</th>
+                            <th>Tên khách hàng</th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th>Chi tiết đơn hàng</th>
+                            <th>Ghi chú</th>
+                            <th>Khách phải trả</th>
+                            <th>Cập nhật trạng thái đơn hàng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <form id="updateOrderForm" method="post" enctype="multipart/form-data"
+                            action="/admin/updateorder">
+                            <input type="text" name="orderid" class="p-2 my-2 border border-black rounded" hidden>
+                            <input type="text" name="status" class="p-2 my-2 border border-black rounded" hidden>
+                        </form>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.OrderID</td>
+                                <td>@item.UserId</td>
+                                <td>@item.DateOrder</td>
+                                <td>@item.FullName</td>
+                                <td>
+                                    <div class="dropdown" id="dropdown-@item.OrderID">
+                                        <div class="main">@item.Status</div>
+                                        <div class="dropdown-content">
+                                            <div onclick="selectOption('đang giao', @item.OrderID)">đang giao</div>
+                                            <div onclick="selectOption('đã giao thành công', @item.OrderID)">đã giao thành
+                                                công</div>
+                                            <div onclick="selectOption('giao không thành công', @item.OrderID)">giao không
+                                                thành công</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button style="border: 1px solid black;padding:10px" class="button_detail_order">xem chi tiết</button>
+                                    <table id="order-items" style="display: none;">
+                                        @if (item.CartItems != null && item.CartItems.Any())
+                                        {
+                                             <thead>
+                    <tr class="bg-gray-200 text-sm uppercase leading-normal text-gray-600">
+                        <th class="px-2 py-2 text-left">Tên sản phẩm</th>
+                        <th class="px-2 py-2 text-left">Tên topping</th>
+                        <th class="px-2 py-2 text-left">Số lượng</th>
+                        <th class="px-2 py-2 text-left">Đơn vị tính</th>
+                        <th class="px-2 py-2 text-right">Đơn giá</th>
+                        <th class="px-2 py-2 text-right">Thành tiền</th>
+                    </tr>
+                </thead>
+                                            @foreach (var cartItem in item.CartItems)
+                                            {
+                                                <tr>
+                                                    <td class="px-2 py-2 text-left">@cartItem.NameProduct</td>
+                                                    <td class="px-2 py-2 text-left">@cartItem.ToppingNames</td>
+                                                    <td class="px-2 py-2 text-left">@cartItem.Quantity</td>
+                                                    <td class="px-2 py-2 text-left">@cartItem.Dvt</td>
+                                                    <td class="px-2 py-2 text-right">@cartItem.UnitPrice</td>
+                                                    <td class="px-2 py-2 text-right">@cartItem.PriceProduct</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td>@item.Ghichu</td>
+                                <td>@item.Total</td>
+                                <td><button type="button" onclick="submitForm(@item.OrderID)">Cập nhật</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+      @* document.getElementById('button_detail_order').addEventListener('click', function () {
+        var table = document.getElementById('order-items');
+        if (table.style.display === 'none') {
+            table.style.display = 'table'; // Hiển thị bảng nếu nó đang ẩn
+            this.textContent = 'Ẩn chi tiết'; // Thay đổi nội dung của nút
+        } else {
+            table.style.display = 'none'; // Ẩn bảng nếu nó đang hiển thị
+            this.textContent = 'Xem chi tiết'; // Thay đổi nội dung của nút
+        }
+    }); *@
+    function selectOption(status, orderId) {
+        var dropdown = document.getElementById('dropdown-' + orderId);
+        dropdown.querySelector('.main').innerText = status;
+        document.querySelector('input[name="orderid"]').value = orderId;
+        document.querySelector('input[name="status"]').value = status;
+    }
+
+    @* function submitForm(orderId) {
+        var dropdown = document.getElementById('dropdown-' + orderId);
+        var status = dropdown.querySelector('.main').innerText;
+        document.querySelector('input[name="orderid"]').value = orderId;
+        document.querySelector('input[name="status"]').value = status;
+        document.getElementById('updateOrderForm').submit();
+        } *@
+        function submitForm(orderId) {
+            var formData = new FormData(document.getElementById('updateOrderForm'));
+            $.ajax({
+                url: '/admin/updateorder',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert('Lỗi khi gửi yêu cầu.');
+                }
+            });
+        }
+       var buttons = document.querySelectorAll('.button_detail_order');
+buttons.forEach(function(button) {
+    button.addEventListener('click', function () {
+        var table = this.nextElementSibling; // Lấy phần tử kế tiếp của nút là bảng order-items
+        if (table.style.display === 'none' || table.style.display === '') {
+            table.style.display = 'table'; // Hiển thị bảng nếu nó đang ẩn hoặc chưa có kiểu hiển thị
+            this.textContent = 'Ẩn chi tiết'; // Thay đổi nội dung của nút
+        } else {
+            table.style.display = 'none'; // Ẩn bảng nếu nó đang hiển thị
+            this.textContent = 'Xem chi tiết'; // Thay đổi nội dung của nút
+        }
+    });
+});
+</script>

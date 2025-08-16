@@ -1,0 +1,46 @@
+@model HUFLITCOFFEE.ViewModels.LoginViewModel
+<link rel="stylesheet" href="~/css/Login.css">
+<div class="Login_container">
+    <form asp-action="Login" asp-controller="Account" method="post">
+        <div class="Login_imgcontainer">
+            <img src="~/images/Logo.png" style="margin: auto;" alt="Avatar" class="Login_avatar">
+            <h4>ĐĂNG NHẬP</h4>
+            <p class="Login_greeting">TheCoffee xin chào!</p>
+        </div>
+
+        <div class="Login_innercontainer">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+            <div class="Login_input-container">
+                <img src="https://cdn-icons-png.flaticon.com/128/1077/1077114.png" alt="Username Icon"
+                    class="Login_icon">
+                <input asp-for="Username" style="padding:10px 20px ;width:100%" class="Login_input-container_input"
+                    placeholder="Username" required>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="Login_input-container">
+                <img src="https://cdn-icons-png.flaticon.com/128/3064/3064155.png" alt="Password Icon"
+                    class="Login_icon">
+                <input asp-for="Password" type="password" class="Login_input-container_input" placeholder="Mật khẩu"
+                    required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit">Đăng Nhập</button>
+
+            <a class="Login_psw" href="/forgot">Bạn quên mật khẩu?</a>
+            <hr>
+            <div class="Register" style="width: 50%;margin:auto">
+                <a href="/register" class="Login_cancelbtn">Tạo Tài khoản</a>
+            </div>
+        </div>
+    </form>
+</div>
